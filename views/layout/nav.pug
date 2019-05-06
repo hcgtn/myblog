@@ -1,0 +1,23 @@
+.fly-panel.fly-column
+	.layui-container
+		ul.layui-clear
+			li.layui-hide-xs.layui-this
+				a(href='/') 首页
+			li
+				a(href='/column/quiz/') 提问
+			li
+				a(href='/column/share/')
+					| 分享
+					span.layui-badge-dot
+			li
+				a(href='/column/discuss/') 讨论
+			li
+				a(href='/column/suggest/') 建议
+			li
+				a(href='/column/notice/') 公告
+			li
+				a(href='/column/news/') 动态
+		.fly-column-right.layui-hide-xs
+			a.layui-btn(href='/article') 发表文章
+		.layui-hide-sm.layui-show-xs-block(style='margin-top: -10px; padding-bottom: 10px; text-align: center;')
+			a.layui-btn(href='/article') 发表文章

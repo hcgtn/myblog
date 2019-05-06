@@ -1,0 +1,36 @@
+extends ./layout/layout.pug
+
+block contents
+	.layui-container.fly-marginTop
+		.fly-panel(pad20='', style='padding-top: 5px;')
+			.layui-form.layui-form-pane
+				.layui-tab.layui-tab-brief(lay-filter='user')
+					ul.layui-tab-title
+						li.layui-this 文章编辑
+					#LAY_ucm.layui-form.layui-tab-content(style='padding: 20px 0;')
+						.layui-tab-item.layui-show
+							form(action="/article", method="POST")
+								.layui-row.layui-col-space15.layui-form-item
+									.layui-col-md3
+										label.layui-form-label 所在专栏
+										.layui-input-block
+											select(name='tips', lay-verify='required')
+												option
+												option(value='0') 提问
+												option(value='1') 分享
+												option(value='2') 讨论
+												option(value='4') 建议
+									.layui-col-md9
+										label.layui-form-label(for='L_title') 标题
+										.layui-input-block
+											input#L_title.layui-input(type='text', name='title', required='', lay-verify='required', autocomplete='off')
+								.layui-form-item.layui-form-text
+									.layui-input-block
+										textarea#L_content(style='display: none;')
+								.layui-form-item
+									button.layui-btn(lay-filter='*', lay-submit='') 立即发布
+	
+	
+block scripts
+	script(src="./js/article.js")
+

@@ -1,0 +1,25 @@
+extends ./layout.pug
+
+mixin controlTable(filterName)
+	.fly-panel.fly-panel-user(pad20='')
+		#LAY_uc.layui-tab.layui-tab-brief(lay-filter='user')
+			#LAY_ucm.layui-tab-content(style='padding: 5px 0;')
+				.layui-tab-item.layui-show
+					table#LAY_mySendCard.layui-hide(lay-filter=filterName)
+block contents
+	.layui-container.fly-marginTop.fly-user-main
+		block admin
+			ul.layui-nav.layui-nav-tree.layui-inline(lay-filter='user')
+				li.layui-nav-item.layui-this
+					a(href='/user/post/')
+						i.iconfont.icon-tiezi
+						| 文章管理
+				li.layui-nav-item
+					a(href='/user/message/')
+						i.layui-icon.layui-icon-dialogue
+						| 评论管理
+				li.layui-nav-item
+					a(href='/user/product/')
+						i.iconfont.icon-chanpin
+						| 头像上传
+block scripts

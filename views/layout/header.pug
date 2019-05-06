@@ -1,0 +1,38 @@
+.fly-header.layui-bg-black
+	.layui-container
+		a.fly-logo(href='/')
+			h2 CYC的个人博客
+		ul.layui-nav.fly-nav.layui-hide-xs(lay-filter='')
+			li.layui-nav-item.layui-this
+				a(href='')
+					i.layui-icon 
+					| 首页
+			li.layui-nav-item
+				a(href='') 前端
+			li.layui-nav-item
+				a(href='') 后端
+			li.layui-nav-item
+				a(href='') 运维
+			li.layui-nav-item
+				a(href='') 设计
+			li.layui-nav-item
+				a(href='') 人工智能
+		ul.layui-nav.fly-nav-user
+			if session && session.isNew
+				li.layui-nav-item
+					a.fly-nav-avatar(href='')
+						cite.layui-hide-xs 耀尘
+						img.layui-nav-img(src='./imgs/default.png')
+					dl.layui-nav-child
+						dd
+							a(href=session.role > 1 ? "/admin/user": "/admin/article") 用户中心
+						dd
+							a(href="/user/logout") 退了
+			else
+				li.layui-nav-item
+					i.layui-icon 
+				li.layui-nav-item
+					a(href='/user/login/') 登入
+				li.layui-nav-item
+					a(href='/user/reg/') 注册
+					

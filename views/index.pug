@@ -1,0 +1,46 @@
+extends ./layout/layout.pug
+
+block nav
+	include ./layout/nav.pug
+	
+	//-
+		artList
+			文章id _id
+			作者 author
+				作者头像 author.avatar
+				作者名称 author.username
+			文章标题 title
+			内容属性 tips
+			评论数 commentNum
+			发表时间 postTime
+block contents
+	- var artList = [{_id:"1",author:{avatar:"/avatar/default.png",username:"范建1"},title:"自定义表单验证中post函数问题",tips:"问题",commentNum:"28",postTime:new Date()},{_id:"2",author:{avatar:"/avatar/default.png",username:"范建2"},title:"自定义表单验证中post函数问题自定义表单验证中post函数问题自定义表单验证中post函数问题自定义表单验证中post函数问题",tips:"问题",commentNum:"28",postTime:new Date()},{_id:"3",author:{avatar:"/avatar/default.png",username:"范建3"},title:"自定义表单验证中post函数问题",tips:"问题",commentNum:"28",postTime:new Date()},{_id:"4",author:{avatar:"/avatar/default.png",username:"范建4"},title:"自定义表单验证中post函数问题",tips:"问题",commentNum:"28",postTime:new Date()},{_id:"5",author:{avatar:"/avatar/default.png",username:"范建5"},title:"自定义表单验证中post函数问题",tips:"问题",commentNum:"28",postTime:new Date()}];
+	- var maxNum = 30;
+	.layui-container
+		.layui-row.layui-col-space15
+			.layui-col-md8
+				.fly-panel
+					.fly-panel-title.fly-filter
+						a 留言
+					ul.fly-list
+						each info in artList
+							li
+								a.fly-avatar(href='#')
+									img(src=info.author.avatar, alt=info.author)
+								h2
+									a.layui-badge= info.tips
+									a(href=`/article/${info._id}`)= info.title
+								.fly-list-info
+									a(href='#', link='')
+										cite= info.author.username
+									span= info.postTime.toLocaleString()
+									span.fly-list-kiss.layui-hide-xs(title='评论')
+										span.fly-list-nums
+											i.iconfont.icon-pinglun1(title='回答')
+											= info.commentNum
+					include ./layout/laypage.pug
+			include ./layout/right_tag.pug
+
+block scripts
+	script(src="/js/index.js")
+

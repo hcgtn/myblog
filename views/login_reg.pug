@@ -1,0 +1,44 @@
+extends ./layout/layout.pug
+mixin userinfo(filterName)
+	.layui-form-item
+		label.layui-form-label 用户名
+		.layui-input-inline
+			input.layui-input(id=`${filterName}Name`,type='text', name='userName', required='', lay-verify='required', autocomplete='off')
+	.layui-form-item
+		label.layui-form-label 密码
+		.layui-input-inline
+			input.layui-input(id=`${filterName}Pass` ,type='password', name='pass', required='', lay-verify='required', autocomplete='off')
+mixin btn(filterName)
+	button.layui-btn(lay-filter=filterName, lay-submit='') 立即提交
+	button.layui-btn.layui-btn-primary(type='reset') 重置
+
+block contents
+	.layui-container.fly-marginTop
+		.fly-panel.fly-panel-user(pad20='')
+			.layui-tab.layui-tab-brief(lay-filter='user')
+				ul.layui-tab-title
+					li(class = loginShow ? "layui-this" : "")
+						a(href='/user/login') 登入
+					li(class = loginShow ? "" : "layui-this")
+						a(href='/user/reg') 注册
+				#LAY_ucm.layui-tab-content(style='padding: 20px 0;')
+					.layui-tab-item(class = loginShow ? "layui-show" : "")
+						.layui-form.layui-form-pane
+							form#login(method='post', name='login', lay-filter='login')
+								+userinfo("login")
+								.layui-form-item
+									+btn("login")
+					.layui-tab-item(class = loginShow ? "" : "layui-show")
+						.layui-form.layui-form-pane
+							form#regeister(method='post', name='regeister', lay-filter='register')
+								+userinfo("reg")
+								.layui-form-item
+									label.layui-form-label(for='regRepass') 确认密码
+									.layui-input-inline
+										input#regRepass.layui-input(type='password', name='repass', required='', lay-verify='required', autocomplete='off')
+								.layui-form-item
+									+btn("reg")
+
+block scripts
+	script(src="/js/login_reg.js")
+

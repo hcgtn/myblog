@@ -1,0 +1,77 @@
+extends ./layout/layout.pug
+
+block nav
+	include ./layout/nav.pug
+	//-
+		article
+			文章id _id
+			文章标题 title
+			作者 author
+				作者头像 author.avatar
+				作者名称 author.username
+			发表时间 postTime[.toLocaleString()]
+			内容属性 tips
+			内容 content
+			
+		comment:
+			
+			来源 from
+				名字 username
+				头像 avatar
+			时间 postTime
+			内容 content
+
+block contents
+	//- var article = {_id:123,title:"怎么去掉layuiAdmin的url中的#号?",author:{avatar:"./imgs/default.png",username:"老大村长"},postTime:new Date(),tips:"提问",content:" https://www.layui.com/admin/pro/#/home/homepage2 <br/><br/>layuiAdmin的url中总是带这个 #，怎么搞掉他，看着好烦人。"};
+	//- var comments = [{_id:124,from:{username:"想不到名字",avatar:"./imgs/default.png"},postTime:new Date(),content:"你是个智障吧，这是路由，去掉还怎么跳转页面"},{_id:124,from:{username:"快乐浪子哥",avatar:"./imgs/default.png"},postTime:new Date(),content:"可以用iframe版"}];
+	.layui-container
+		.layui-row.layui-col-space15
+			.layui-col-md8.content.detail
+				.fly-panel.detail-box
+					h1(data-artid = article._id)= article.title
+					.detail-about
+						a.fly-avatar(href='')
+							img(src = article.author.avatar, alt=article.author.username)
+						.fly-detail-user
+							a.fly-link(href='')
+								cite= alt=article.author.username
+							span= article.postTime.toLocaleString()
+					.detail-body.layui-text.photos!= article.content
+				#flyReply.fly-panel.detail-box
+					fieldset.layui-elem-field.layui-field-title(style='text-align: center;')
+						legend 回帖
+					ul#jieda.jieda
+						each info in comments
+							li(data-id=info._id)
+								.detail-about.detail-about-reply
+									a.fly-avatar(href='')
+										img(src=info.from.avatar, alt=info.from.username)
+									.fly-detail-user
+										a.fly-link(href='')
+											cite= info.from.username
+									.detail-hits
+										span= info.postTime.toLocaleString()
+								.detail-body.layui-text.jieda-body.photos!= info.content
+					.layui-form.layui-form-pane
+						form(action='/comment', method='post')
+							.layui-form-item.layui-form-text
+								.layui-input-block
+									textarea#L_content.layui-bg-orange(style='display: none;')
+							.layui-form-item
+								input(type='hidden', name='jid', value='51912')
+								input(type='hidden', name='daPages', value='1')
+								button.layui-btn(lay-filter='*', lay-submit='') 提交回复
+			.layui-col-md4
+				dl.fly-panel.fly-list-one
+					dt.fly-panel-title 公告
+					dd
+						a(href='/jie/51577/')
+							| 前台数据表单 传入的整数型数据 达到20位失去精确度了 怎么解决 急急急急急急！！
+					dd
+						a(href='/jie/51599/')
+							| layui在编辑页面的时候，怎么让select有选中的值？ 同样是编辑界面，怎么让图片集显示出来呢？
+
+
+block scripts
+	script(src="./js/reply-article.js")
+
