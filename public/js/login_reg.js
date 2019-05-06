@@ -3,12 +3,12 @@ layui.use(['form','element','jquery'], function(){
 	,element = layui.element
 	,$ = layui.$;
 	form.on('submit(login)', function(data){
-		layer.msg(JSON.stringify(data.field));
-		return false;
+		//layer.msg(JSON.stringify(data.field));
+		//return false;
 	});
 	form.on('submit(reg)', function(data){
-		layer.msg(JSON.stringify(data.field));
-		return false;
+		//layer.msg(JSON.stringify(data.field));
+		//return false;
 	});
 	$("#regRepass").on("blur", function(){
 		const pwd = $("#regPass").val();
