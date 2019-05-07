@@ -5,15 +5,7 @@ const user = require('../control/user');
 const article = require('../control/article');
 
 //设计主页
-router.get("/",user.keepLog,async (ctx)=>{	
-	console.log("处理后session",ctx.session);
-	console.log("处理后isNew",ctx.session.isNew);
-	await ctx.render("index",{
-		title:"主页",
-		//session:{ isNew: false,role:0 }
-		session:ctx.session
-	});
-});
+router.get("/",user.keepLog,article.getList);
 // 登陆/注册
 router.get(/^\/user\/(?=reg|login)/,async (ctx)=>{
 	const loginShow = /login$/.test(ctx.path);
@@ -30,6 +22,8 @@ router.get("/user/logout",user.logout);
 router.get("/article",user.keepLog,article.addPage);
 //文章发表
 router.post("/article",user.keepLog,article.add);
+// 文章列表分页 路由
+router.get("/page/:id", article.getList)
 
 //如果是export.router = router;就要用解构
 module.exports = router

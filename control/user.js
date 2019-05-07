@@ -95,9 +95,11 @@ exports.login = async (ctx)=>{
 			//signed:true  //默认true 客户端可以看到签名sig
 		});	
 		//设置完cookie就要设置session了，于cookie一样
+		console.log("设置avatar:",data[0].avatar);
 		ctx.session = {
 			username,
-			uid:data[0]._id
+			uid:data[0]._id,
+			avatar:data[0].avatar
 		};
 		await ctx.render("isOK",{
 			status:"登陆成功"
@@ -114,6 +116,7 @@ exports.login = async (ctx)=>{
 exports.keepLog = async (ctx,next) =>{
 	console.log("初始session",ctx.session);
 	console.log("初始isNew",ctx.session.isNew);
+	console.log("初始avatar",ctx.session.avatar);
 	if(ctx.session.isNew){
 		if(ctx.cookies.get("username")){
 			ctx.session= {
