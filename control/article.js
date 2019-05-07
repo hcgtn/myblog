@@ -1,6 +1,9 @@
 const { db } = require("../schema/config");
 const ArticleSchema = require("../schema/article");
+const CommentSchema = require("../schema/comment");
+
 const Article = db.model("articles",ArticleSchema);
+const Comment = db.model("commnets",CommentSchema);
 
 // 返回文章发表页
 exports.addPage = async (ctx)=>{
@@ -75,4 +78,37 @@ exports.getList = async ctx=>{
 	});
 }
 
+// 文章详情
+exports.details = async ctx=>{
+	//动态连接路由里的id
+	const _id = ctx.params.id;
+	
+	const article = await Article
+		.findById(_id)
+		.populate({
+			path:"author",
+			select:"username _id avatar"
+		})
+		.then(data=>data);
+		
+	const comment = await Comment
+		.find({article:_id})
+		.sort("-created")
+		.populate("from","username avatar")
+		.then(data => data)
+		.catch(err=>{
+			console.log(err);
+		});
+		
+		console.log(comment);
 
+	await ctx.render("reply-article",{
+		title:"文章详情页",
+		article,
+		session:ctx.session,
+		comment
+	});
+	
+	
+	
+}

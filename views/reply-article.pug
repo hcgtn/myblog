@@ -9,7 +9,7 @@ block nav
 			作者 author
 				作者头像 author.avatar
 				作者名称 author.username
-			发表时间 postTime[.toLocaleString()]
+			发表时间 created[.toLocaleString()]
 			内容属性 tips
 			内容 content
 			
@@ -18,30 +18,30 @@ block nav
 			来源 from
 				名字 username
 				头像 avatar
-			时间 postTime
+			时间 created
 			内容 content
 
 block contents
-	//- var article = {_id:123,title:"怎么去掉layuiAdmin的url中的#号?",author:{avatar:"./imgs/default.png",username:"老大村长"},postTime:new Date(),tips:"提问",content:" https://www.layui.com/admin/pro/#/home/homepage2 <br/><br/>layuiAdmin的url中总是带这个 #，怎么搞掉他，看着好烦人。"};
-	//- var comments = [{_id:124,from:{username:"想不到名字",avatar:"./imgs/default.png"},postTime:new Date(),content:"你是个智障吧，这是路由，去掉还怎么跳转页面"},{_id:124,from:{username:"快乐浪子哥",avatar:"./imgs/default.png"},postTime:new Date(),content:"可以用iframe版"}];
+	//- var article = {_id:123,title:"怎么去掉layuiAdmin的url中的#号?",author:{avatar:"./imgs/default.png",username:"老大村长"},created:new Date(),tips:"提问",content:" https://www.layui.com/admin/pro/#/home/homepage2 <br/><br/>layuiAdmin的url中总是带这个 #，怎么搞掉他，看着好烦人。"};
+	//- var comments = [{_id:124,from:{username:"想不到名字",avatar:"./imgs/default.png"},created:new Date(),content:"你是个智障吧，这是路由，去掉还怎么跳转页面"},{_id:124,from:{username:"快乐浪子哥",avatar:"./imgs/default.png"},created:new Date(),content:"可以用iframe版"}];
 	.layui-container
 		.layui-row.layui-col-space15
 			.layui-col-md8.content.detail
 				.fly-panel.detail-box
-					h1(data-artid = article._id)= article.title
+					h1.art-title(data-artid = article._id)= article.title
 					.detail-about
 						a.fly-avatar(href='')
 							img(src = article.author.avatar, alt=article.author.username)
 						.fly-detail-user
 							a.fly-link(href='')
 								cite= alt=article.author.username
-							span= article.postTime.toLocaleString()
+							span= article.created.toLocaleString()
 					.detail-body.layui-text.photos!= article.content
 				#flyReply.fly-panel.detail-box
 					fieldset.layui-elem-field.layui-field-title(style='text-align: center;')
-						legend 回帖
+						legend 评论
 					ul#jieda.jieda
-						each info in comments
+						each info in comment
 							li(data-id=info._id)
 								.detail-about.detail-about-reply
 									a.fly-avatar(href='')
@@ -50,7 +50,7 @@ block contents
 										a.fly-link(href='')
 											cite= info.from.username
 									.detail-hits
-										span= info.postTime.toLocaleString()
+										span= info.created.toLocaleString()
 								.detail-body.layui-text.jieda-body.photos!= info.content
 					.layui-form.layui-form-pane
 						form(action='/comment', method='post')
@@ -73,5 +73,5 @@ block contents
 
 
 block scripts
-	script(src="./js/reply-article.js")
+	script(src="/js/reply-article.js")
 

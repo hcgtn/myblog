@@ -3,6 +3,7 @@ const router = new Router();
 //拿到操作user的逻辑对象
 const user = require('../control/user');
 const article = require('../control/article');
+const comment = require('../control/comment');
 
 //设计主页
 router.get("/",user.keepLog,article.getList);
@@ -24,6 +25,11 @@ router.get("/article",user.keepLog,article.addPage);
 router.post("/article",user.keepLog,article.add);
 // 文章列表分页 路由
 router.get("/page/:id", article.getList)
+// 文章详情页
+router.get("/article/:id",user.keepLog,article.details);
+// 评论提交
+router.post("/comment",user.keepLog,comment.save);
+
 
 //如果是export.router = router;就要用解构
 module.exports = router

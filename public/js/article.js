@@ -8,7 +8,7 @@ layui.use(['layedit','form','element'], function(){
           'image' //插入图片
         ]
       }); //建立编辑器
-	$(".layui-unselect.layui-layedit-tool").hide()
+	$(".layui-unselect.layui-layedit-tool").hide();
 	//监听提交
 	form.on('submit(*)', function(data){
 		const {tips,title} = data.field;

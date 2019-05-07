@@ -8,19 +8,26 @@ layui.use(['layedit','form','element'], function(){
 		height: 160
       });
 	form.on('submit(*)', function(data){
-		const {daPages,jid} = data.field;
-		if(layedit.getText(index).trim().length === 0)return layer.msg("评论内容不能为空");
-		const content = layedit.getText(index);
-		$.post("/comment",content,(data)=>{
-			layer.msg('发表成功', {
+		const content = layedit.getText(index).trim();
+		if(content.length === 0){
+			layer.msg('评论不能为空');
+			return false;
+		};
+		const commitData = {
+			content,
+			article:$(".art-title").data("artid")
+		};
+		$.post("/comment",commitData,(data)=>{
+			layer.msg(data.msg, {
 					icon: 1,
 					time: 1000 //2秒关闭（如果不配置，默认是3秒）
 				}, function(){
 					if(data.status === 1){
-						// 评论成功就重载页面
+						//评论成功就重载页面
 						window.location.reload();
 					};
-			});  
+			});
 		});
+		return false;
 	});
 });
