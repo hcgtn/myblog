@@ -12,7 +12,10 @@ layui.use(['layedit','form','element'], function(){
 	//监听提交
 	form.on('submit(*)', function(data){
 		const {tips,title} = data.field;
-		if(layedit.getText(index).trim().length === 0)return layer.alert("请输入内容");
+		if(layedit.getText(index).trim().length === 0){
+			layer.msg('亲输入内容');
+			return false;
+		} 
 		const result = {
 			tips,
 			title,
@@ -25,7 +28,8 @@ layui.use(['layedit','form','element'], function(){
 				});
 			}else{
 				layer.alert(`发表失败，失败信息：${msg.msg}`);
-			};
+			};	
 		});
+		return false;//防止from标签本身的action
 	});
 });
