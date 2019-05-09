@@ -9,11 +9,11 @@ block contents
 			.layui-tab.layui-tab-brief(lay-filter='user')
 				h2(style='color: red;text-align:center;')= status
 				h2(style='text-align:center;')
-					span#seconds 3
+					span#seconds 1
 					| 秒后跳转...
 block scripts
 	script.
-		let n = 3;
+		let n = 1;
 		let time = null;
 		const fn = ()=>{
 		seconds.innerHTML = --n;

@@ -7,7 +7,8 @@ const ArticleSchema = new Schema({
 		ref:"users"
 	},
 	content:String,
-	tips:String
+	tips:String,
+	commentNum:Number
 },{versionKey: false, 
 	timestamps: {
 		createdAt: "created"//拿到的是UTC格式时间

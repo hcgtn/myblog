@@ -1,10 +1,12 @@
 const { db } = require("../schema/config");
 const ArticleSchema = require("../schema/article");
-const CommentSchema = require("../schema/comment");
-
 const Article = db.model("articles",ArticleSchema);
-const Comment = db.model("commnets",CommentSchema);
 
+const UserSchema = require("../schema/user");
+const User = db.model("users",UserSchema);
+
+const CommentSchema = require("../schema/comment");
+const Comment = db.model("commnets",CommentSchema);
 // 返回文章发表页
 exports.addPage = async (ctx)=>{
 	await ctx.render("add-article",{
@@ -25,10 +27,15 @@ exports.add= async ctx=>{
 	//用户登陆情况下，post发过来数据
 	const data = ctx.request.body;
 	data.author = ctx.session.uid;
-	console.log("提交数据：",data);
+	data.commentNum = 0;
+	//console.log("提交数据：",data);
 	await new Promise((resolve,reject)=>{
 		new Article(data).save((err,data)=>{
 			if(err)return reject(err);
+			//更新用户文章计数
+			User.update({_id:data.author},{$inc:{articleNum:1}},err => {
+				if(err)return console.log(err);
+			});		
 			resolve(data);	
 		});
 	})
@@ -48,9 +55,9 @@ exports.add= async ctx=>{
 
 //分页查找
 exports.getList = async ctx=>{
-	console.log("处理后session",ctx.session);
-	console.log("处理后isNew",ctx.session.isNew);
-	console.log("处理后avatar",ctx.session.avatar);
+	 // console.log("处理后session",ctx.session);
+	 // console.log("处理后isNew",ctx.session.isNew);
+	 // console.log("处理后avatar",ctx.session.avatar);
 	//查询每篇文章对应作者的头像
 	//id ctx.params.id
 	let page = ctx.params.id || 1;
@@ -108,7 +115,4 @@ exports.details = async ctx=>{
 		session:ctx.session,
 		comment
 	});
-	
-	
-	
 }

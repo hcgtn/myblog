@@ -27,7 +27,18 @@ exports.save = async ctx => {
 			message = {
 				status:1,
 				msg:"评论成功"
-			}
+			};
+			Article
+				.update(
+					{_id:data.article},
+					{$inc:{commentNum:1}}
+					,err=>{
+						console.log("更新成功");
+					});
+			//更新用户评论计数
+			User.update({_id:data.author},{$inc:{commentNum:1}},err => {
+				if(err)return console.log(err);
+			});
 		})
 		.catch(err => {
 			message = {

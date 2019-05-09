@@ -21,8 +21,8 @@
 			if session && !session.isNew
 				li.layui-nav-item
 					a.fly-nav-avatar(href='')
-						cite.layui-hide-xs 耀尘
-						img.layui-nav-img(src=session.avatar)
+						cite.layui-hide-xs= session.username
+						img.layui-nav-img(src = session.avatar)
 					dl.layui-nav-child
 						dd
 							a(href=session.role > 1 ? "/admin/user": "/admin/article") 用户中心
