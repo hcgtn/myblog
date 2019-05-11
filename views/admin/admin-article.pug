@@ -1,8 +1,9 @@
-extends ./layout/admin-layout.pug
+extends ../layout/admin-layout.pug
 
 block append admin
-	+controlTable('commentView')
+	+controlTable('articleView')
 	script#barDemo(type='text/html').
 		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
 block scripts
-	script(src="./js/admin-comment.js")
+	script(src="/js/admin-article.js")

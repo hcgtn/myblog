@@ -7,19 +7,37 @@ mixin controlTable(filterName)
 				.layui-tab-item.layui-show
 					table#LAY_mySendCard.layui-hide(lay-filter=filterName)
 block contents
-	.layui-container.fly-marginTop.fly-user-main
+	.layui-container.fly-marginTop.fly-user-main.controlLeftTab
 		block admin
 			ul.layui-nav.layui-nav-tree.layui-inline(lay-filter='user')
-				li.layui-nav-item.layui-this
-					a(href='/user/post/')
+				if session.role > 1
+					li.layui-nav-item
+						a(href='/admin/user')
+							i.layui-icon.layui-icon-username
+							| 用户管理
+				li.layui-nav-item
+					a(href='/admin/article')
 						i.iconfont.icon-tiezi
 						| 文章管理
 				li.layui-nav-item
-					a(href='/user/message/')
+					a(href='/admin/comment')
 						i.layui-icon.layui-icon-dialogue
 						| 评论管理
 				li.layui-nav-item
-					a(href='/user/product/')
+					a(href='/admin/userface')
 						i.iconfont.icon-chanpin
 						| 头像上传
+			script.
+				layui.use('element', function(){
+					var element = layui.element;
+					const $ = layui.$
+
+					$(".controlLeftTab ul li a").each((i, v) => {
+						const a_href = $(v).prop('href')
+						if(a_href === location.href){
+							$('.controlLeftTab ul li').eq(i).addClass("layui-this")
+						}
+
+					})
+				});
 block scripts

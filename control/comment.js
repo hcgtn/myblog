@@ -36,7 +36,7 @@ exports.save = async ctx => {
 						console.log("更新成功");
 					});
 			//更新用户评论计数
-			User.update({_id:data.author},{$inc:{commentNum:1}},err => {
+			User.update({_id:data.from},{$inc:{commentNum:1}},err => {
 				if(err)return console.log(err);
 			});
 		})

@@ -103,11 +103,20 @@ exports.login = async (ctx)=>{
 			overwrite:false,
 			//signed:true  //默认true 客户端可以看到签名sig
 		});	
+		ctx.cookies.set("role",data[0].role,{
+			domain:"localhost",
+			path:"/",
+			maxAge:36e5,
+			httpOnly:true,//true 		不让客户端访问这个cookie
+			overwrite:false,
+			//signed:true  //默认true 客户端可以看到签名sig
+		});	
 		//设置完cookie就要设置session了，于cookie一样
 		ctx.session = {
 			username,
 			uid:data[0]._id,
-			avatar:data[0].avatar
+			avatar:data[0].avatar,
+			role:data[0].role
 		};
 		await ctx.render("isOK",{
 			status:"登陆成功"
@@ -122,15 +131,19 @@ exports.login = async (ctx)=>{
 
 //保持用户的状态
 exports.keepLog = async (ctx,next) =>{
-	// console.log("初始session",ctx.session);
-	// console.log("初始isNew",ctx.session.isNew);
-	// console.log("初始avatar",ctx.session.avatar);
+	console.log("初始session",ctx.session);
+	console.log("初始isNew",ctx.session.isNew);
+	console.log("初始avatar",ctx.session.avatar);
 	if(ctx.session.isNew){
 		if(ctx.cookies.get("username")){
+			let uid = ctx.cookies.get("uid");
+			const avatar = await User.findById(uid)
+			.then(data = data.avatar);
+			console.log(avatar);
 			ctx.session= {
 				username:base64_utf8(ctx.cookies.get("username")),
-				uid:ctx.cookies.get("uid"),
-				avatar:ctx.cookies.get("avatar")
+				uid,
+				avatar
 			};
 		};
 	};
@@ -146,6 +159,32 @@ exports.logout = async (ctx) =>{
 	ctx.cookies.set("uid",null,{
 		maxAge:0
 	});
+	ctx.cookies.set("avatar",null,{
+		maxAge:0
+	});
+	ctx.cookies.set("role",null,{
+		maxAge:0
+	});
 	// 在后台重定向
 	ctx.redirect("/");
 };
+//用户头像上传
+exports.upload = async ctx => {
+	const filename = ctx.req.file.filename;
+	let data = {};
+	await User.update({_id:ctx.session.uid},{$set:{avatar:"/avatar/"+filename}},(err,res)=>{
+		if(err){
+			data={
+				status:0,
+				message:err
+			};
+		}else{
+			data={
+				status:1,
+				message:"上传成功"
+			};
+			ctx.session.avatar = "/avatar/"+filename;
+		};
+	});
+	ctx.body = data;
+}

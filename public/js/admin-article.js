@@ -1,7 +1,7 @@
 layui.use(['element','table'], function(){
-	var table = layui.table
-	,element = layui.element;
+	var table = layui.table;
 	const $ = layui.$;
+
 	/*Powershell=>live-server
 	http://127.0.0.1:8080/new 1.htmls*/
 	//第一个实例

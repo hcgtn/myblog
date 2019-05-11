@@ -1,4 +1,4 @@
-extends ./layout/admin-layout.pug
+extends ../layout/admin-layout.pug
 
 block append admin
 	.fly-panel.fly-panel-user(pad20='')
@@ -11,6 +11,6 @@ block append admin
 							button#uploadHeadBt.layui-btn.upload-img(type='button')
 								i.layui-icon 
 								| 上传头像
-							img(src='./imgs/default.png')
+							img(src=session.avatar)
 block scripts
-	script(src="./js/userface.js")
+	script(src="/js/userface.js")

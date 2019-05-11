@@ -10,10 +10,12 @@ layui.use(['element', 'upload','layer'], function () {
 		,size: 60 //限制文件大小，单位 KB
 		,done: function (res) {
 			//上传完毕回调
-			layer.alert(res.message)
+			layer.alert(res.message,function(){
+				location.reload();
+			});
 		}
 		,error: function () {
 			//请求异常回调
-		}
+		}s
 	});
 });

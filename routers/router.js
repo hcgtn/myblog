@@ -4,6 +4,8 @@ const router = new Router();
 const user = require('../control/user');
 const article = require('../control/article');
 const comment = require('../control/comment');
+const admin = require('../control/admin');
+const upload = require('../util/upload');
 
 //设计主页
 router.get("/",user.keepLog,article.getList);
@@ -11,6 +13,8 @@ router.get("/",user.keepLog,article.getList);
 router.get(/^\/user\/(?=reg|login)/,async (ctx)=>{
 	const loginShow = /login$/.test(ctx.path);
 	const title = loginShow?"登陆":"注册";
+	
+	console.log(ctx);
 	await ctx.render("login_reg",{title,loginShow});
 });
 //处理用户登陆的post
@@ -28,7 +32,19 @@ router.get("/page/:id", article.getList)
 // 文章详情页
 router.get("/article/:id",user.keepLog,article.details);
 // 评论提交
-router.post("/comment",user.keepLog,comment.save);
+router.post("/comment",user.keepLog,comment.save); 
+//文章 评论 头像上传
+router.get("/admin/:id",user.keepLog,admin.index);
+//头像上传功能
+router.post("/upload",user.keepLog,upload.single("file"),user.upload);
+
+//404
+router.get("*",async ctx => {
+	await ctx.render("404",{
+		title:"404"
+	});
+});
+
 
 
 //如果是export.router = router;就要用解构
