@@ -37,6 +37,10 @@ router.post("/comment",user.keepLog,comment.save);
 router.get("/admin/:id",user.keepLog,admin.index);
 //头像上传功能
 router.post("/upload",user.keepLog,upload.single("file"),user.upload);
+//评论管理
+router.get("/user/comments",user.keepLog,comment.comList);
+//评论删除
+router.del("/comment/:id/:articleId",user.keepLog,comment.del);
 
 //404
 router.get("*",async ctx => {

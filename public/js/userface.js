@@ -16,6 +16,6 @@ layui.use(['element', 'upload','layer'], function () {
 		}
 		,error: function () {
 			//请求异常回调
-		}s
+		}
 	});
 });

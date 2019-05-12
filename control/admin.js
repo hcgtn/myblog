@@ -6,7 +6,7 @@ const UserSchema = require("../schema/user");
 const User = db.model("users",UserSchema);
 
 const CommentSchema = require("../schema/comment");
-const Comment = db.model("commnets",CommentSchema);
+const Comment = db.model("comments",CommentSchema);
 
 const fs = require('fs');
 const { join } = require('path');

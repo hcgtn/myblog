@@ -7,28 +7,28 @@ layui.use(['element', 'table'], function () {
 	table.render({
 		elem: '#LAY_mySendCard',
 		height: 312,
-		url: 'http://localhost/interfaceTest/myblog/getCommentList.php' //数据接口
+		//url: 'http://localhost/interfaceTest/myblog/getCommentList.php' //数据接口
+		url:'/user/comments'
 	,
 		page: true //开启分页
 	,
 		cols: [[//表头
 				{
-					field: 'id',
-					title: 'ID',
-					width: 80,
-					sort: true,
-					align: 'center',
-					fixed: 'left'
-				}, {
 					field: 'article',
-					title: '被评文章'
+					title: '被评文章',
+					templet: function(d){
+						return d.article.title;
+					}
 				}, {
-					field: 'comment',
+					field: 'content',
 					title: '评论内容',
 					align: 'center',
 				}, {
-					field: 'time',
+					field: 'created',
 					title: '评论时间',
+					templet: function(d){
+						return (new Date(d.created)).toLocaleString();
+					},
 					width: 200,
 					align: 'center',
 					sort: true
@@ -45,7 +45,9 @@ layui.use(['element', 'table'], function () {
 		var data = obj.data; 
 		var layEvent = obj.event; 
 		var tr = obj.tr; 
-		const id = data.id;
+		const commentId = data._id;
+		const articleId = data.article._id;
+		console.log(articleId);
 		if (layEvent === 'detail') {
 			//do somehing
 		} else if (layEvent === 'del') {
@@ -55,13 +57,13 @@ layui.use(['element', 'table'], function () {
 					//向服务端发送删除指令
 				 $.ajax({
 					 method: "delete",
-					 url: "/comment/" + id,
+					 url: "/comment/" + commentId + "/"+ articleId,
 					 data: {
 						// 发送文章id值，减少后台查询
-						 id
+						articleId
 					 },
 					 success(res){
-						if(res.state){
+						if(res.status){
 							layer.msg(res.message, {
 								anim: 1,
 								time: 800

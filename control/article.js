@@ -6,7 +6,7 @@ const UserSchema = require("../schema/user");
 const User = db.model("users",UserSchema);
 
 const CommentSchema = require("../schema/comment");
-const Comment = db.model("commnets",CommentSchema);
+const Comment = db.model("comments",CommentSchema);
 // 返回文章发表页
 exports.addPage = async (ctx)=>{
 	await ctx.render("add-article",{
